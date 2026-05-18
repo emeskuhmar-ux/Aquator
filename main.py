@@ -89,7 +89,8 @@ body {{ background-color: #060709; margin: 0; padding: 10px; overflow: hidden; }
 components.html(integrated_header_html, height=220, scrolling=False)
 
 # Inject standard style definitions safely into the streamlit global viewport
-st.markdown(f"<style>{css_content}</style>", unsafe_with_html=True)
+# TO THIS:
+st.markdown("<style>" + css_content + "</style>", unsafe_with_html=True)
 
 # 3. Primary Control Split Viewport
 col_control, col_display = st.columns([1, 2], gap="large")
