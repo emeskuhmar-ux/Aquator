@@ -1,5 +1,6 @@
 # main.py
 import streamlit as st
+import streamlit.components.v1 as components
 import numpy as np
 import plotly.graph_objects as go
 from orchestrator import AquatorOrchestrator
@@ -15,12 +16,12 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Safely inject stylesheet file away from Python's string formatter
+# Read the external CSS file so we can pass it directly into the HTML frame
 try:
     with open("style.css", "r") as f:
-        st.markdown(f"<style>{f.read()}</style>", unsafe_with_html=True)
+        css_content = f.read()
 except Exception as e:
-    st.warning("AQUATOR: Stylestream initialization pending...")
+    css_content = ""
 
 @st.cache_data(show_spinner=False)
 def run_aquator_engine():
@@ -61,31 +62,34 @@ live_wave_dir = surface.get("wave_direction_deg", 180.0)
 
 # --- WEB UI RENDER MACHINE ---
 
-# 1. Platform Brand Navigation Header (Clean concatenation)
-header_html = (
-    '<div class="matsim-header">'
-    '<div class="brand-group">'
-    '<div class="logo-glow"></div>'
-    '<div class="brand-title">AQUATOR <span class="brand-accent">//</span> HUB</div>'
-    '</div>'
-    '<div class="system-badge">● Engine v3.14 Active</div>'
-    '</div>'
-)
-st.markdown(header_html, unsafe_with_html=True)
+# Render the Header and System Telemetry Log safely inside a clean sandboxed viewport
+integrated_header_html = f"""
+<style>
+{css_content}
+body {{ background-color: #060709; margin: 0; padding: 10px; overflow: hidden; }}
+</style>
+<div class="matsim-header" style="margin: 0 0 20px 0;">
+    <div class="brand-group">
+        <div class="logo-glow"></div>
+        <div class="brand-title">AQUATOR <span class="brand-accent">//</span> HUB</div>
+    </div>
+    <div class="system-badge">● Engine v3.14 Active</div>
+</div>
+<div class="matsim-card">
+    <div class="card-title"><span class="title-accent">◆</span> Orchestrator Pipeline Compute Node</div>
+    <div class="terminal-box">
+        <span class="line-dim">[TELEMETRY]</span> Initializing universal multi-agent simulation matrix...<br>
+        <span class="line-dim">[DATA CORE]</span> Telemetry download completed. Region: Baltic Sea (Lat: 54.1, Lon: 12.1)<br>
+        <span class="line-dim">[ENGINEER]</span> Grounded math vectors securely linked using Fossen equations of motion.<br>
+        <span class="line-dim">[STATUS SCI]</span> Application container running stable. Web socket online.
+    </div>
+</div>
+"""
+# Execute native compilation frame
+components.html(integrated_header_html, height=220, scrolling=False)
 
-# 2. Live Runtime Compute Log Monitor
-log_html = (
-    '<div class="matsim-card">'
-    '<div class="card-title"><span class="title-accent">◆</span> Orchestrator Pipeline Compute Node</div>'
-    '<div class="terminal-box">'
-    '<span class="line-dim">[TELEMETRY]</span> Initializing universal multi-agent simulation matrix...<br>'
-    '<span class="line-dim">[DATA CORE]</span> Telemetry download completed. Region: Baltic Sea (Lat: 54.1, Lon: 12.1)<br>'
-    '<span class="line-dim">[ENGINEER]</span> Grounded math vectors securely linked using Fossen equations of motion.<br>'
-    '<span class="line-dim">[STATUS SCI]</span> Application container running stable. Web socket online.'
-    '</div>'
-    '</div>'
-)
-st.markdown(log_html, unsafe_with_html=True)
+# Inject standard style definitions safely into the streamlit global viewport
+st.markdown(f"<style>{css_content}</style>", unsafe_with_html=True)
 
 # 3. Primary Control Split Viewport
 col_control, col_display = st.columns([1, 2], gap="large")
