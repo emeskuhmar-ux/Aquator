@@ -16,7 +16,7 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Read the external CSS file so we can pass it directly into the HTML frame
+# Read the external CSS file so we can pass it directly into the HTML component frame
 try:
     with open("style.css", "r") as f:
         css_content = f.read()
@@ -63,9 +63,10 @@ live_wave_dir = surface.get("wave_direction_deg", 180.0)
 # --- WEB UI RENDER MACHINE ---
 
 # Render the Header and System Telemetry Log safely inside a clean sandboxed viewport
-integrated_header_html = f"""
+# We append the styles here using a standard template literal which is native-safe
+integrated_header_html = """
 <style>
-{css_content}
+{0}
 body {{ background-color: #060709; margin: 0; padding: 10px; overflow: hidden; }}
 </style>
 <div class="matsim-header" style="margin: 0 0 20px 0;">
@@ -84,50 +85,44 @@ body {{ background-color: #060709; margin: 0; padding: 10px; overflow: hidden; }
         <span class="line-dim">[STATUS SCI]</span> Application container running stable. Web socket online.
     </div>
 </div>
-"""
-# Execute native compilation frame
+""".format(css_content)
+
+# Execute native sandboxed compilation frame
 components.html(integrated_header_html, height=220, scrolling=False)
 
-# Inject standard style definitions safely into the streamlit global viewport
-# TO THIS:
-st.markdown("<style>" + css_content + "</style>", unsafe_with_html=True)
-
-# 3. Primary Control Split Viewport
+# 3. Primary Control Split Viewport (Using native Streamlit widgets cleanly)
 col_control, col_display = st.columns([1, 2], gap="large")
 
 with col_control:
-    st.markdown('<div class="matsim-card"><div class="card-title">⚙️ Primary Controllers</div>', unsafe_with_html=True)
+    st.write("### ⚙️ Primary Controllers")
     vehicle_mass = st.slider("Vehicle Dry Mass Target (kg)", min_value=10.0, max_value=1000.0, value=85.0, step=5.0)
     safety_factor = st.slider("Hull Structural Safety Factor (FoS)", min_value=1.0, max_value=3.0, value=1.7, step=0.1)
     water_density = st.slider("Fluid Density Array (kg/m³)", min_value=990.0, max_value=1045.0, value=default_density, step=0.1)
     material_profile = st.selectbox("Cylindrical Pressure Shell Alloys", ["Carbon Fiber Composite", "Aluminum 7075-T6", "Titanium Grade 5"])
-    st.markdown('</div>', unsafe_with_html=True)
     
-    st.markdown('<div class="matsim-card"><div class="card-title">📡 Metocean Live Metrics</div>', unsafe_with_html=True)
+    st.write("---")
+    st.write("### 📡 Metocean Live Metrics")
     m1, m2 = st.columns(2)
     with m1:
         st.metric(label="Live Signif. Wave Height", value=f"{live_wave} m")
     with m2:
         st.metric(label="Baltic Base Salinity", value=f"{default_salinity} PSU")
-    st.markdown('</div>', unsafe_with_html=True)
 
 with col_display:
-    st.markdown('<div class="matsim-card"><div class="card-title">📊 Multi-Disciplinary Workspace</div>', unsafe_with_html=True)
-    
+    st.write("### 📊 Multi-Disciplinary Workspace")
     tab_hydro, tab_structure = st.tabs(["Hydrodynamics & Buoyancy", "Structural Shell Analytics"])
     
     with tab_hydro:
         displaced_volume_m3 = vehicle_mass / water_density
         displaced_volume_liters = displaced_volume_m3 * 1000.0
         
-        st.write("")
         met1, met2 = st.columns(2)
         with met1:
             st.metric(label="Required Volumetric Displacement", value=f"{displaced_volume_liters:.2f} L")
         with met2:
             st.metric(label="Neutral Equilibrium Vol.", value=f"{displaced_volume_m3:.5f} m³")
             
-        st.markdown("<p class='brand-accent' style='font-size:0.8rem; margin-top:15px;'>Archimedes equilibrium solvers scale parameters across dynamic thermoclines profile matrices:</p>", unsafe_with_html=True)
+        st.caption("Archimedes equilibrium solvers scale parameters across dynamic thermoclines profile matrices:")
         
         # Plotly canvas layout setup
         depths = np.linspace(0, 300, 100)
@@ -154,8 +149,5 @@ with col_display:
         
         calculated_thickness_mm = (0.5 * 1000) * ((safety_factor * 2.0) / (2 * (E / 1e9)))**(1/3)
         
-        st.write("")
         st.metric(label="Calculated Minimum Safe Thickness Boundary", value=f"{calculated_thickness_mm:.2f} mm")
-        st.write(f"Structural verification engine validated using strict material characteristics for {material_profile} at a calculated modulus threshold of {E/1e9:.1f} GPa.")
-        
-    st.markdown('</div>', unsafe_with_html=True)
+        st.info(f"Structural verification engine validated using strict material characteristics for {material_profile} at a calculated modulus threshold of {E/1e9:.1f} GPa.")
