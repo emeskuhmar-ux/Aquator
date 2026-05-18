@@ -1,110 +1,49 @@
 /* style.css */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600&family=Space+Grotesk:wght=400;500;600&family=JetBrains+Mono:wght=300;400;500&display=swap');
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap');
 
-.matsim-header {
-    display: flex;
-    justify-content: space-between;
-    align-items: center;
-    background: rgba(10, 12, 16, 0.7);
-    backdrop-filter: blur(12px);
-    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-    padding: 20px 40px;
-    border-radius: 8px;
+/* Global App Changes */
+.stApp {
+    background-color: #040507 !important;
+    color: #94a3b8 !important;
+    font-family: 'Plus Jakarta Sans', sans-serif !important;
 }
 
-.brand-group { display: flex; align-items: center; gap: 12px; }
-
-.logo-glow {
-    width: 10px;
-    height: 10px;
-    background-color: #00f2fe;
-    border-radius: 50%;
-    box-shadow: 0 0 12px #00f2fe;
-}
-
-.brand-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 1.25rem;
-    font-weight: 600;
-    color: #ffffff;
-    letter-spacing: -0.5px;
-}
-
-.brand-accent {
-    color: #475569; 
-    font-weight: 300;
-}
-
-.system-badge {
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.7rem;
-    background: rgba(0, 242, 254, 0.08);
-    border: 1px solid rgba(0, 242, 254, 0.2);
-    color: #00f2fe;
-    padding: 4px 10px;
-    border-radius: 4px;
-    text-transform: uppercase;
-}
-
-.matsim-card {
-    background-color: #0b0d11;
-    border: 1px solid #171b22;
+/* Make containers look like sleek tech cards */
+div[data-testid="stVerticalBlock"] > div {
+    background-color: #090b0e;
+    border: 1px solid #141923;
     border-radius: 12px;
-    padding: 24px;
-    margin-bottom: 24px;
-    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+    padding: 5px;
 }
 
-.card-title {
-    font-family: 'Space Grotesk', sans-serif;
-    font-size: 0.85rem;
-    font-weight: 600;
-    text-transform: uppercase;
-    letter-spacing: 1.5px;
-    color: #ffffff;
-    margin-bottom: 20px;
-    display: flex;
-    align-items: center;
-    gap: 8px;
-}
-
-.title-accent {
-    color: #00f2fe;
-}
-
-.terminal-box {
-    background-color: #030406;
-    border: 1px solid #12161f;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 0.78rem;
-    padding: 16px;
-    color: #4bc5ff;
-    border-radius: 8px;
-    line-height: 1.6;
-}
-
-.line-dim { color: #475569; }
-
+/* High-end Metric Overrides */
 div[data-testid="stMetricValue"] {
     font-family: 'Space Grotesk', sans-serif !important;
-    font-size: 1.75rem !important;
-    font-weight: 500 !important;
+    font-size: 1.85rem !important;
+    font-weight: 600 !important;
     color: #ffffff !important;
 }
 
 div[data-testid="stMetricLabel"] {
     font-size: 0.8rem !important;
-    color: #64748b !important;
+    color: #475569 !important;
+    text-transform: uppercase !important;
+    letter-spacing: 1px !important;
 }
 
-.stTabs [data-baseweb="tab-list"] { gap: 10px; }
-.stTabs [data-baseweb="tab"] {
-    background-color: #060709;
-    border: 1px solid #171b22;
-    padding: 8px 16px;
-    border-radius: 6px;
-    color: #64748b;
+/* Customizing the main tabs */
+.stTabs [data-baseweb="tab-list"] {
+    gap: 8px;
 }
+
+.stTabs [data-baseweb="tab"] {
+    background-color: #0d1117 !important;
+    border: 1px solid #1f242c !important;
+    padding: 8px 16px !important;
+    border-radius: 6px !important;
+    color: #475569 !important;
+}
+
 .stTabs [aria-selected="true"] {
     background-color: rgba(0, 242, 254, 0.05) !important;
     border: 1px solid #00f2fe !important;
