@@ -1,11 +1,5 @@
 /* style.css */
-@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Grotesk:wght=400;500;600&family=JetBrains+Mono:wght=300;400;500&display=swap');
-
-.stApp {
-    background-color: #060709;
-    color: #94a3b8;
-    font-family: 'Plus Jakarta Sans', sans-serif;
-}
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght=300;400;500;600&family=Space+Grotesk:wght=400;500;600&family=JetBrains+Mono:wght=300;400;500&display=swap');
 
 .matsim-header {
     display: flex;
@@ -15,7 +9,7 @@
     backdrop-filter: blur(12px);
     border-bottom: 1px solid rgba(255, 255, 255, 0.05);
     padding: 20px 40px;
-    margin: -6rem -5rem 2.5rem -5rem;
+    border-radius: 8px;
 }
 
 .brand-group { display: flex; align-items: center; gap: 12px; }
