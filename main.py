@@ -61,29 +61,31 @@ live_wave_dir = surface.get("wave_direction_deg", 180.0)
 
 # --- WEB UI RENDER MACHINE ---
 
-# 1. Platform Brand Navigation Header (Changed to a static string, no 'f' modifier)
-st.markdown("""
-    <div class="matsim-header">
-        <div class="brand-group">
-            <div class="logo-glow"></div>
-            <div class="brand-title">AQUATOR <span class="brand-accent">//</span> HUB</div>
-        </div>
-        <div class="system-badge">● Engine v3.14 Active</div>
-    </div>
-""", unsafe_with_html=True)
+# 1. Platform Brand Navigation Header (Clean concatenation)
+header_html = (
+    '<div class="matsim-header">'
+    '<div class="brand-group">'
+    '<div class="logo-glow"></div>'
+    '<div class="brand-title">AQUATOR <span class="brand-accent">//</span> HUB</div>'
+    '</div>'
+    '<div class="system-badge">● Engine v3.14 Active</div>'
+    '</div>'
+)
+st.markdown(header_html, unsafe_with_html=True)
 
-# 2. Live Runtime Compute Log Monitor (Kept f-string but stripped HTML-level style attributes)
-st.markdown(f"""
-    <div class="matsim-card">
-        <div class="card-title"><span class="title-accent">◆</span> Orchestrator Pipeline Compute Node</div>
-        <div class="terminal-box">
-            <span class="line-dim">[TELEMETRY]</span> Initializing universal multi-agent simulation matrix...<br>
-            <span class="line-dim">[DATA CORE]</span> Telemetry download completed. Region: Baltic Sea (Lat: 54.1, Lon: 12.1)<br>
-            <span class="line-dim">[ENGINEER]</span> Grounded math vectors securely linked using Fossen equations of motion.<br>
-            <span class="line-dim">[STATUS SCI]</span> Application container running stable. Web socket online.
-        </div>
-    </div>
-""", unsafe_with_html=True)
+# 2. Live Runtime Compute Log Monitor
+log_html = (
+    '<div class="matsim-card">'
+    '<div class="card-title"><span class="title-accent">◆</span> Orchestrator Pipeline Compute Node</div>'
+    '<div class="terminal-box">'
+    '<span class="line-dim">[TELEMETRY]</span> Initializing universal multi-agent simulation matrix...<br>'
+    '<span class="line-dim">[DATA CORE]</span> Telemetry download completed. Region: Baltic Sea (Lat: 54.1, Lon: 12.1)<br>'
+    '<span class="line-dim">[ENGINEER]</span> Grounded math vectors securely linked using Fossen equations of motion.<br>'
+    '<span class="line-dim">[STATUS SCI]</span> Application container running stable. Web socket online.'
+    '</div>'
+    '</div>'
+)
+st.markdown(log_html, unsafe_with_html=True)
 
 # 3. Primary Control Split Viewport
 col_control, col_display = st.columns([1, 2], gap="large")
