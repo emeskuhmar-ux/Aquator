@@ -53,120 +53,123 @@ st.set_page_config(
     initial_sidebar_state="collapsed"
 )
 
-# Deep dark web layout override styling
-st.markdown("""
-    <style>
-    @import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap');
-    
-    /* App Canvas Properties */
-    .stApp {
-        background-color: #060709;
-        color: #94a3b8;
-        font-family: 'Plus Jakarta Sans', sans-serif;
-    }
-    
-    /* Top Brand Platform Header */
-    .matsim-header {
-        display: flex;
-        justify-content: space-between;
-        align-items: center;
-        background: rgba(10, 12, 16, 0.7);
-        backdrop-filter: blur(12px);
-        border-bottom: 1px solid rgba(255, 255, 255, 0.05);
-        padding: 20px 40px;
-        margin: -6rem -5rem 2.5rem -5rem;
-    }
-    .brand-group { display: flex; align-items: center; gap: 12px; }
-    .logo-glow {
-        width: 10px;
-        height: 10px;
-        background-color: #00f2fe;
-        border-radius: 50%;
-        box-shadow: 0 0 12px #00f2fe;
-    }
-    .brand-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 1.25rem;
-        font-weight: 600;
-        color: #ffffff;
-        letter-spacing: -0.5px;
-    }
-    .system-badge {
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.7rem;
-        background: rgba(0, 242, 254, 0.08);
-        border: 1px solid rgba(0, 242, 254, 0.2);
-        color: #00f2fe;
-        padding: 4px 10px;
-        border-radius: 4px;
-        text-transform: uppercase;
-    }
+# --- MATSIM.AI PREMIUM VISUAL STYLING INJECTION ---
+st.set_page_config(
+    page_title="AQUATOR // Autonomous Workspace",
+    page_icon="🌊",
+    layout="wide",
+    initial_sidebar_state="collapsed"
+)
 
-    /* Grid Layout Matrix Cards */
-    .matsim-card {
-        background-color: #0b0d11;
-        border: 1px solid #171b22;
-        border-radius: 12px;
-        padding: 24px;
-        margin-bottom: 24px;
-        box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
-    }
-    .card-title {
-        font-family: 'Space Grotesk', sans-serif;
-        font-size: 0.85rem;
-        font-weight: 600;
-        text-transform: uppercase;
-        letter-spacing: 1.5px;
-        color: #ffffff;
-        margin-bottom: 20px;
-        display: flex;
-        align-items: center;
-        gap: 8px;
-    }
-    
-    /* Code Execution Terminal Window */
-    .terminal-box {
-        background-color: #030406;
-        border: 1px solid #12161f;
-        font-family: 'JetBrains Mono', monospace;
-        font-size: 0.78rem;
-        padding: 16px;
-        color: #4bc5ff;
-        border-radius: 8px;
-        line-height: 1.6;
-    }
-    .line-green { color: #4ade80; }
-    .line-dim { color: #475569; }
+# 1. Raw CSS Block (Completely separate so Python doesn't parse the braces)
+css_styles = """
+<style>
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@300;400;500;600&family=Space+Grotesk:wght@400;500;600&family=JetBrains+Mono:wght@300;400;500&display=swap');
 
-    /* Custom Metric Formatting Overrides */
-    div[data-testid="stMetricValue"] {
-        font-family: 'Space Grotesk', sans-serif !important;
-        font-size: 1.75rem !important;
-        font-weight: 500 !important;
-        color: #ffffff !important;
-    }
-    div[data-testid="stMetricLabel"] {
-        font-size: 0.8rem !important;
-        color: #64748b !important;
-    }
-    
-    /* Tab Overrides */
-    .stTabs [data-baseweb="tab-list"] { gap: 10px; }
-    .stTabs [data-baseweb="tab"] {
-        background-color: #060709;
-        border: 1px solid #171b22;
-        padding: 8px 16px;
-        border-radius: 6px;
-        color: #64748b;
-    }
-    .stTabs [data-baseweb="tab"]:hover { color: #ffffff; }
-    .stTabs [aria-selected="true"] {
-        background-color: rgba(0, 242, 254, 0.05) !important;
-        border: 1px solid #00f2fe !important;
-        color: #00f2fe !important;
-    }
-    </style>
-""", unsafe_with_html=True)
+.stApp {
+    background-color: #060709;
+    color: #94a3b8;
+    font-family: 'Plus Jakarta Sans', sans-serif;
+}
+
+.matsim-header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    background: rgba(10, 12, 16, 0.7);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+    padding: 20px 40px;
+    margin: -6rem -5rem 2.5rem -5rem;
+}
+.brand-group { display: flex; align-items: center; gap: 12px; }
+.logo-glow {
+    width: 10px;
+    height: 10px;
+    background-color: #00f2fe;
+    border-radius: 50%;
+    box-shadow: 0 0 12px #00f2fe;
+}
+.brand-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 1.25rem;
+    font-weight: 600;
+    color: #ffffff;
+    letter-spacing: -0.5px;
+}
+.system-badge {
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.7rem;
+    background: rgba(0, 242, 254, 0.08);
+    border: 1px solid rgba(0, 242, 254, 0.2);
+    color: #00f2fe;
+    padding: 4px 10px;
+    border-radius: 4px;
+    text-transform: uppercase;
+}
+
+.matsim-card {
+    background-color: #0b0d11;
+    border: 1px solid #171b22;
+    border-radius: 12px;
+    padding: 24px;
+    margin-bottom: 24px;
+    box-shadow: 0 4px 20px rgba(0, 0, 0, 0.2);
+}
+.card-title {
+    font-family: 'Space Grotesk', sans-serif;
+    font-size: 0.85rem;
+    font-weight: 600;
+    text-transform: uppercase;
+    letter-spacing: 1.5px;
+    color: #ffffff;
+    margin-bottom: 20px;
+    display: flex;
+    align-items: center;
+    gap: 8px;
+}
+
+.terminal-box {
+    background-color: #030406;
+    border: 1px solid #12161f;
+    font-family: 'JetBrains Mono', monospace;
+    font-size: 0.78rem;
+    padding: 16px;
+    color: #4bc5ff;
+    border-radius: 8px;
+    line-height: 1.6;
+}
+.line-green { color: #4ade80; }
+.line-dim { color: #475569; }
+
+div[data-testid="stMetricValue"] {
+    font-family: 'Space Grotesk', sans-serif !important;
+    font-size: 1.75rem !important;
+    font-weight: 500 !important;
+    color: #ffffff !important;
+}
+div[data-testid="stMetricLabel"] {
+    font-size: 0.8rem !important;
+    color: #64748b !important;
+}
+
+.stTabs [data-baseweb="tab-list"] { gap: 10px; }
+.stTabs [data-baseweb="tab"] {
+    background-color: #060709;
+    border: 1px solid #171b22;
+    padding: 8px 16px;
+    border-radius: 6px;
+    color: #64748b;
+}
+.stTabs [data-baseweb="tab"]:hover { color: #ffffff; }
+.stTabs [aria-selected="true"] {
+    background-color: rgba(0, 242, 254, 0.05) !important;
+    border: 1px solid #00f2fe !important;
+    color: #00f2fe !important;
+}
+</style>
+"""
+st.markdown(css_styles, unsafe_with_html=True)
 
 # 1. LIVE NAVIGATION HEADER BAR
 st.markdown("""
