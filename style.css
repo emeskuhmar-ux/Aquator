@@ -175,3 +175,11 @@ div[data-testid="stMetricLabel"] {
     border: 1px solid #00f2fe !important;
     color: #00f2fe !important;
 }
+/* Add to the bottom of style.css */
+.brand-accent {
+    color: #475569; 
+    font-weight: 300;
+}
+.title-accent {
+    color: #00f2fe;
+}
