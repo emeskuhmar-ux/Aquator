@@ -18,7 +18,8 @@ st.set_page_config(
 # Safely inject the styling theme directly into the app framework
 try:
     with open("style.css", "r") as f:
-        st.markdown("<style>" + f.read() + "</style>", unsafe_with_html=True)
+        # Pass the CSS directly as a plain text block without any HTML wrap tags
+        st.html("<style>" + f.read() + "</style>")
 except Exception as e:
     pass
 
@@ -60,14 +61,14 @@ live_wave = surface.get("wave_height_significant_m", 1.2)
 
 # --- NATIVE PREMIUM PLATFORM LAYOUT ---
 
-# 1. Top Header Banner
+# 1. Top Header Banner (Using native Streamlit layout columns)
 head_left, head_right = st.columns([3, 1])
 with head_left:
-    st.subheader("AQUATOR // CORE HUB")
+    st.title("AQUATOR // CORE HUB")
     st.caption("Universal Multi-Disciplinary Ocean Simulation Architecture")
 with head_right:
-    st.markdown("<br>", unsafe_with_html=True)
-    st.button("● CONNECTED", disabled=True)
+    # Native status indicator replacing the custom HTML button
+    st.status("CONNECTED", state="complete", expanded=False)
 
 st.divider()
 
@@ -81,7 +82,8 @@ log_stream = (
 )
 st.code(log_stream, language="bash")
 
-st.write("<br>", unsafe_with_html=True)
+# Native structural container for vertical spacing (Replaces <br>)
+st.container()
 
 # 3. Interactive Control Grid Split
 col_control, col_display = st.columns([1, 2], gap="large")
@@ -116,6 +118,8 @@ with col_display:
         with met2:
             st.metric(label="Neutral Equilibrium Volume", value=f"{displaced_volume_m3:.5f} m³")
             
+        st.caption("Archimedes equilibrium solvers scale parameters across dynamic thermoclines profile matrices:")
+        
         # Plotly dark canvas layout setup
         depths = np.linspace(0, 300, 100)
         net_force = (displaced_volume_m3 * water_density * 9.81) - (vehicle_mass * 9.81) + (depths * 0.003)
